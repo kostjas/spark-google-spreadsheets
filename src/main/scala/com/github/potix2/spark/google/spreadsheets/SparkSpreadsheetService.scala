@@ -237,8 +237,8 @@ object SparkSpreadsheetService {
 
   /**
    * create new context of spareadsheets for spark
-    *
-    * @param serviceAccountId
+   *
+   * @param serviceAccountIdOption
    * @param p12File
    * @return
    */
@@ -246,8 +246,8 @@ object SparkSpreadsheetService {
 
   /**
    * find a spreadsheet by name
-    *
-    * @param spreadsheetName
+   *
+   * @param spreadsheetName
    * @param context
    * @return
    */

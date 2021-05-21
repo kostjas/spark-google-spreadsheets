@@ -46,7 +46,7 @@ class SparkSpreadsheetServiceReadSuite extends AnyFlatSpec with BeforeAndAfter {
     assert(worksheet.get.name == "case2")
     assert(worksheet.get.headers == List("id", "firstname", "lastname", "email", "country", "ipaddress"))
 
-    val firstRow = worksheet.get.rows(0)
+    val firstRow = worksheet.get.rows.head
     assert(firstRow == Map(
       "id" -> "1",
       "firstname" -> "Annie",
