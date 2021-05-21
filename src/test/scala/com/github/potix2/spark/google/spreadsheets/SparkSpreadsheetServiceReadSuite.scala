@@ -14,10 +14,10 @@
 package com.github.potix2.spark.google.spreadsheets
 
 import java.io.File
+import org.scalatest.BeforeAndAfter
+import org.scalatest.flatspec.AnyFlatSpec
 
-import org.scalatest.{BeforeAndAfter, FlatSpec}
-
-class SparkSpreadsheetServiceReadSuite extends FlatSpec with BeforeAndAfter {
+class SparkSpreadsheetServiceReadSuite extends AnyFlatSpec with BeforeAndAfter {
   private val serviceAccountId = "53797494708-ds5v22b6cbpchrv2qih1vg8kru098k9i@developer.gserviceaccount.com"
   private val testCredentialPath = "src/test/resources/spark-google-spreadsheets-test-eb7b191d1e1d.p12"
   private val TEST_SPREADSHEET_NAME = "SpreadsheetSuite"
