@@ -2,7 +2,15 @@ enablePlugins(SparkPlugin)
 
 name := "spark-google-spreadsheets"
 
-organization := "io.github.kostjas"
+organization := "io.github.kostjas.spark-google-spreadsheets"
+
+homepage := Some(url("https://github.com/kostjas/spark-google-spreadsheets"))
+
+organizationHomepage := Some(url("https://github.com/kostjas"))
+
+description := "Google Spreadsheets datasource for SparkSQL and DataFrames."
+
+licenses += ("Apache-2.0", url("http://www.apache.org/licenses/LICENSE-2.0"))
 
 scalaVersion := "2.12.13"
 
@@ -33,12 +41,6 @@ resolvers ++= Seq(Resolver.mavenLocal, Resolver.sonatypeRepo("staging"))
  */
 publishMavenStyle := true
 
-description := "Google Spreadsheets datasource for SparkSQL and DataFrames."
-
-homepage := Some(url("https://github.com/kostjas/spark-google-spreadsheets"))
-
-licenses += ("Apache-2.0", url("http://www.apache.org/licenses/LICENSE-2.0"))
-
 pgpKeyRing := Some(file("~/.gnupg/pubring.kbx"))
 
 releasePublishArtifactsAction := PgpKeys.publishSigned.value
@@ -50,11 +52,12 @@ pomIncludeRepository := { _ => false }
 
 credentials += Credentials(Path.userHome / ".sbt" / "sonatype_credentials")
 
-publishTo := {
-  val nexus = "https://s01.oss.sonatype.org/"
-  if (isSnapshot.value) Some("snapshots" at nexus + "content/repositories/snapshots")
-  else Some("releases" at nexus + "service/local/staging/deploy/maven2")
-}
+// For all Sonatype accounts created on or after February 2021
+sonatypeCredentialHost := "s01.oss.sonatype.org"
+
+sonatypeProfileName := "io.github.kostjas"
+
+publishTo := sonatypePublishToBundle.value
 
 scmInfo := Some(
   ScmInfo(
