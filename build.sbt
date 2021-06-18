@@ -72,22 +72,6 @@ developers := List(
   )
 )
 
-//usePgpKeyHex("8A59AE723A34F8E65707F46EB9472E3E77EDB975")
-
-//pomExtra := (
-//  <url>https://github.com/kostjas/spark-google-spreadsheets</url>
-//  <scm>
-//    <url>git@github.com:kostjas/spark-google-spreadsheets.git</url>
-//    <connection>scm:git:git@github.com:kostjas/spark-google-spreadsheets.git</connection>
-//  </scm>
-//  <developers>
-//    <developer>
-//      <id>kostjas</id>
-//      <name>Kostya Spitsyn</name>
-//      <url>https://github.com/kostjas/</url>
-//    </developer>
-//  </developers>)
-
 // Skip tests during assembly
 test in assembly := {}
 
