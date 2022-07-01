@@ -22,10 +22,7 @@ libraryDependencies ++= Seq(
   "org.slf4j" % "slf4j-api" % "1.7.30" % "provided",
   "org.scalatest" %% "scalatest" % "3.2.9" % "test",
   "com.google.apis" % "google-api-services-sheets" % "v4-rev20210629-1.32.1",
-  "com.google.auth" % "google-auth-library-oauth2-http" % "1.4.0"
-)
-
-libraryDependencies ++= Seq(
+  "com.google.auth" % "google-auth-library-oauth2-http" % "1.4.0",
   "org.scala-lang" % "scala-library" % scalaVersion.value % "compile",
   "javax.servlet" % "javax.servlet-api" % "4.0.1" % "compile"
 )
