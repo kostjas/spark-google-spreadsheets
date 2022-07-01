@@ -12,9 +12,9 @@ description := "Google Spreadsheets datasource for SparkSQL and DataFrames."
 
 licenses += ("Apache-2.0", url("http://www.apache.org/licenses/LICENSE-2.0"))
 
-scalaVersion := "2.12.15"
+scalaVersion := "2.12.16"
 
-sparkVersion := "3.2.1"
+sparkVersion := "3.3.0"
 
 sparkComponents := Seq("core", "sql")
 
