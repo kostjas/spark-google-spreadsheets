@@ -146,7 +146,11 @@ object SparkSpreadsheetService {
   }
 
   case class SparkWorksheet(context: SparkSpreadsheetContext, spreadsheet: Spreadsheet, sheet: Sheet) {
-    def name: String = sheet.getProperties.getTitle
+
+    require(sheet.getProperties.getTitle != null, "Title of spreadsheet should be defined.")
+
+    val name: String = sheet.getProperties.getTitle
+
     lazy val values: Option[List[JavaList[Object]]] =
       Option(context.query(spreadsheet.getSpreadsheetId, name).getValues).map(_.asScala.toList)
 
@@ -157,7 +161,9 @@ object SparkSpreadsheetService {
 
     lazy val rows: Seq[Map[String, String]] = {
       values.fold(Seq.empty[Map[String, String]])(v =>
-        v.headOption.fold(Seq.empty[Map[String, String]]) { _ =>
+        if (v.isEmpty) {
+          Seq.empty
+        } else {
           v.tail.map { row =>
             headers.zip(row.asScala.map(_.toString))(collection.breakOut): Map[String, String]
           }
