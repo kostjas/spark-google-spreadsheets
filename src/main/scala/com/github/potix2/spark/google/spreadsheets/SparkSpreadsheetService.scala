@@ -93,7 +93,7 @@ object SparkSpreadsheetService {
         new CellData()
           .setUserEnteredValue(new ExtendedValue()
             .setStringValue(field.name))
-      }.toList
+      }(collection.breakOut)
 
       val updateHeaderRequest = new UpdateCellsRequest()
         .setStart(new GridCoordinate()
@@ -157,7 +157,7 @@ object SparkSpreadsheetService {
     }
 
     lazy val headers: Seq[String] =
-      values.asScala.headOption.fold[Seq[String]](Seq.empty)(row => row.asScala.map(_.toString))
+      values.asScala.headOption.fold[Seq[String]](Seq.empty)(_.asScala.map(_.toString))
 
     def updateCells[T](schema: StructType, data: List[T], extractor: T => RowData): Unit = {
       val colNum = schema.fields.length
@@ -178,7 +178,7 @@ object SparkSpreadsheetService {
         new CellData()
           .setUserEnteredValue(new ExtendedValue()
             .setStringValue(field.name))
-      }.toList
+      }(collection.breakOut)
 
       val updateHeaderRequest = new UpdateCellsRequest()
         .setStart(new GridCoordinate()
@@ -208,11 +208,12 @@ object SparkSpreadsheetService {
     }
 
     def rows: Seq[Map[String, String]] =
-      if(values.isEmpty) {
-        Seq()
-      }
-      else {
-        values.asScala.tail.map { row => headers.zip(row.asScala.map(_.toString)).toMap }
+      if (values.isEmpty) {
+        Seq.empty
+      } else {
+        values.asScala.tail.map { row =>
+          headers.zip(row.asScala.map(_.toString))(collection.breakOut): Map[String, String]
+        }
       }
   }
 

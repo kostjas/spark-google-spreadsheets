@@ -79,7 +79,7 @@ case class SpreadsheetRelation protected[spark] (
   }
 
   private def inferSchema(): StructType =
-    StructType(aWorksheet.headers.toList.map { fieldName =>
+    StructType(aWorksheet.headers.map { fieldName =>
       StructField(fieldName, StringType, nullable = true)
     })
 

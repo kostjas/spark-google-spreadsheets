@@ -77,6 +77,7 @@ class DefaultSource extends RelationProvider with SchemaRelationProvider with Cr
                                            context: SparkSpreadsheetService.SparkSpreadsheetContext,
                                            spreadsheetName: String,
                                            worksheetName: String,
-                                           schema: Option[StructType]): SpreadsheetRelation =
+                                           schema: Option[StructType]
+                                          ): SpreadsheetRelation =
     SpreadsheetRelation(context, spreadsheetName, worksheetName, schema)(sqlContext)
 }
