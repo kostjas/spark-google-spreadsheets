@@ -237,3 +237,4 @@ object SparkSpreadsheetService {
                      (implicit context: SparkSpreadsheetContext): Option[SparkSpreadsheet] =
     Try(context.findSpreadsheet(spreadsheetName)).toOption
 }
+
