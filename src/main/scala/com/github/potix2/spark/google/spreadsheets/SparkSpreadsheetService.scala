@@ -19,10 +19,12 @@ import com.google.api.services.sheets.v4.model._
 import org.apache.spark.sql.types.StructType
 import com.google.api.services.sheets.v4.Sheets
 
+import java.util.{List => JavaList}
 import scala.collection.JavaConverters._
 import com.google.api.client.json.gson.GsonFactory
 import com.google.auth.http.HttpCredentialsAdapter
 
+import scala.Option.option2Iterable
 import scala.util.Try
 
 object SparkSpreadsheetService {
@@ -63,9 +65,7 @@ object SparkSpreadsheetService {
               .setColumnCount(colNum)
               .setRowCount(rowNum)))
 
-      val requests = List(
-        new Request().setAddSheet(addSheetRequest)
-      )
+      val requests = List(new Request().setAddSheet(addSheetRequest))
 
       context.service.spreadsheets().batchUpdate(spreadsheet.getSpreadsheetId,
         new BatchUpdateSpreadsheetRequest()
@@ -147,17 +147,23 @@ object SparkSpreadsheetService {
 
   case class SparkWorksheet(context: SparkSpreadsheetContext, spreadsheet: Spreadsheet, sheet: Sheet) {
     def name: String = sheet.getProperties.getTitle
-    lazy val values: java.util.List[java.util.List[Object]] = {
-      val valueRange = context.query(spreadsheet.getSpreadsheetId, name)
-      if ( valueRange.getValues != null ) {
-        valueRange.getValues
-      } else {
-        List[java.util.List[Object]]().asJava
-      }
-    }
+    lazy val values: Option[List[JavaList[Object]]] =
+      Option(context.query(spreadsheet.getSpreadsheetId, name).getValues).map(_.asScala.toList)
 
     lazy val headers: Seq[String] =
-      values.asScala.headOption.fold[Seq[String]](Seq.empty)(_.asScala.map(_.toString))
+      values.toSeq.flatMap(_.headOption
+        .fold[Seq[String]](Seq.empty)(_.asScala.map(_.toString)(collection.breakOut))
+      )
+
+    lazy val rows: Seq[Map[String, String]] = {
+      values.fold(Seq.empty[Map[String, String]])(v =>
+        v.headOption.fold(Seq.empty[Map[String, String]]) { _ =>
+          v.tail.map { row =>
+            headers.zip(row.asScala.map(_.toString))(collection.breakOut): Map[String, String]
+          }
+        }
+      )
+    }
 
     def updateCells[T](schema: StructType, data: List[T], extractor: T => RowData): Unit = {
       val colNum = schema.fields.length
@@ -206,15 +212,6 @@ object SparkSpreadsheetService {
         new BatchUpdateSpreadsheetRequest()
           .setRequests(requests.asJava)).execute()
     }
-
-    def rows: Seq[Map[String, String]] =
-      if (values.isEmpty) {
-        Seq.empty
-      } else {
-        values.asScala.tail.map { row =>
-          headers.zip(row.asScala.map(_.toString))(collection.breakOut): Map[String, String]
-        }
-      }
   }
 
   /**
