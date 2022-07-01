@@ -236,7 +236,6 @@ object SparkSpreadsheetService {
    * @param context
    * @return
    */
-  def findSpreadsheet(spreadsheetName: String)
-                     (implicit context: SparkSpreadsheetContext): Option[SparkSpreadsheet] =
+  def findSpreadsheet(spreadsheetName: String, context: SparkSpreadsheetContext): Option[SparkSpreadsheet] =
     Try(context.findSpreadsheet(spreadsheetName)).toOption
 }
