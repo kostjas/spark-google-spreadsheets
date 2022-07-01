@@ -65,12 +65,7 @@ class DefaultSource extends RelationProvider with SchemaRelationProvider with Cr
                                            spreadsheetName: String,
                                            worksheetName: String,
                                            schema: StructType): SpreadsheetRelation =
-    if (schema == null) {
-      createRelation(sqlContext, context, spreadsheetName, worksheetName, None)
-    }
-    else {
-      createRelation(sqlContext, context, spreadsheetName, worksheetName, Some(schema))
-    }
+    createRelation(sqlContext, context, spreadsheetName, worksheetName, Option(schema))
 
   private[spreadsheets] def createRelation(sqlContext: SQLContext,
                                            context: SparkSpreadsheetService.SparkSpreadsheetContext,
