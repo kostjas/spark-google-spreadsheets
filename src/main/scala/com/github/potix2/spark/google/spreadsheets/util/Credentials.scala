@@ -2,7 +2,7 @@ package com.github.potix2.spark.google.spreadsheets.util
 
 import com.google.api.services.sheets.v4.SheetsScopes
 import com.google.auth.http.HttpCredentialsAdapter
-import com.google.auth.oauth2.{GoogleCredentials, UserCredentials}
+import com.google.auth.oauth2.GoogleCredentials
 
 import java.time.Duration
 import scala.collection.JavaConverters.seqAsJavaListConverter
