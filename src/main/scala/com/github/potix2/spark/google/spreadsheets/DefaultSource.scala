@@ -43,8 +43,10 @@ class DefaultSource extends RelationProvider with SchemaRelationProvider with Cr
   override def createRelation(sqlContext: SQLContext, mode: SaveMode, parameters: Map[String, String], data: DataFrame): BaseRelation = {
     val path = parameters.getOrElse("path", sys.error("'path' must be specified for spreadsheets."))
     val (spreadsheetName, worksheetName) = pathToSheetNames(path)
-    implicit val context: SparkSpreadsheetService.SparkSpreadsheetContext = createSpreadsheetContext(parameters)
-    val spreadsheet = SparkSpreadsheetService.findSpreadsheet(spreadsheetName)
+
+    val context: SparkSpreadsheetService.SparkSpreadsheetContext = createSpreadsheetContext(parameters)
+
+    val spreadsheet = SparkSpreadsheetService.findSpreadsheet(spreadsheetName)(context)
       .fold(throw new RuntimeException(s"no such a spreadsheet: $spreadsheetName"))(identity)
 
     spreadsheet.addWorksheet(worksheetName, data.schema, data.collect().toList, Util.toRowData)

@@ -39,9 +39,9 @@ case class SpreadsheetRelation protected[spark] (
 
   private lazy val rows: Seq[Map[String, String]] = aWorksheet.rows
 
-  private[spreadsheets] def findWorksheet(spreadsheetName: String, worksheetName: String)(implicit ctx: SparkSpreadsheetContext): Either[Throwable, SparkWorksheet] =
+  private[spreadsheets] def findWorksheet(spreadsheetName: String, worksheetName: String)(ctx: SparkSpreadsheetContext): Either[Throwable, SparkWorksheet] =
     for {
-      sheet <- findSpreadsheet(spreadsheetName).toRight(new RuntimeException(s"no such spreadsheet: $spreadsheetName"))
+      sheet <- findSpreadsheet(spreadsheetName)(ctx).toRight(new RuntimeException(s"no such spreadsheet: $spreadsheetName"))
       worksheet <- sheet.findWorksheet(worksheetName).toRight(new RuntimeException(s"no such worksheet: $worksheetName"))
     } yield worksheet
 

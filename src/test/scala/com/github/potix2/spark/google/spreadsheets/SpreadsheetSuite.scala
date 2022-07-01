@@ -29,6 +29,7 @@ class SpreadsheetSuite extends AnyFlatSpec with BeforeAndAfter {
   private val testSpreadsheetID = System.getenv("TEST_SPREADSHEET_ID")
 
   private val credentials = Credentials.credentialsFromJsonString(oAuthJson)
+  private val spreadSheetContext = SparkSpreadsheetService(credentials)
 
   private var sqlContext: SQLContext = _
   before {
@@ -43,15 +44,14 @@ class SpreadsheetSuite extends AnyFlatSpec with BeforeAndAfter {
   }
 
   private[spreadsheets] def deleteWorksheet(spreadSheetName: String, worksheetName: String)
-                                           (implicit spreadSheetContext: SparkSpreadsheetContext): Unit = {
+                                           (spreadSheetContext: SparkSpreadsheetContext): Unit = {
     SparkSpreadsheetService
-      .findSpreadsheet(spreadSheetName)
+      .findSpreadsheet(spreadSheetName)(spreadSheetContext)
       .foreach(_.deleteWorksheet(worksheetName))
   }
 
   def withNewEmptyWorksheet(testCode: String => Any): Unit = {
-    implicit val spreadSheetContext = SparkSpreadsheetService(credentials)
-    val spreadsheet = SparkSpreadsheetService.findSpreadsheet(testSpreadsheetID)
+    val spreadsheet = SparkSpreadsheetService.findSpreadsheet(testSpreadsheetID)(spreadSheetContext)
     spreadsheet.foreach { s =>
       val workSheetName = Random.alphanumeric.take(16).mkString
       s.addWorksheet(workSheetName, 1000, 1000)
@@ -65,13 +65,12 @@ class SpreadsheetSuite extends AnyFlatSpec with BeforeAndAfter {
   }
 
   def withEmptyWorksheet(testCode: String => Any): Unit = {
-    implicit val spreadSheetContext = SparkSpreadsheetService(credentials)
     val workSheetName = Random.alphanumeric.take(16).mkString
     try {
       testCode(workSheetName)
     }
     finally {
-      deleteWorksheet(testSpreadsheetID, workSheetName)
+      deleteWorksheet(testSpreadsheetID, workSheetName)(spreadSheetContext)
     }
   }
 
