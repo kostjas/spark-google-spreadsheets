@@ -23,8 +23,6 @@ import scala.collection.JavaConverters._
 import com.google.api.client.json.gson.GsonFactory
 import com.google.auth.http.HttpCredentialsAdapter
 
-import java.util
-import scala.collection.breakOut
 import scala.util.Try
 
 object SparkSpreadsheetService {
@@ -149,7 +147,7 @@ object SparkSpreadsheetService {
 
   case class SparkWorksheet(context: SparkSpreadsheetContext, spreadsheet: Spreadsheet, sheet: Sheet) {
     def name: String = sheet.getProperties.getTitle
-    lazy val values = {
+    lazy val values: java.util.List[java.util.List[Object]] = {
       val valueRange = context.query(spreadsheet.getSpreadsheetId, name)
       if ( valueRange.getValues != null ) {
         valueRange.getValues
@@ -221,7 +219,7 @@ object SparkSpreadsheetService {
   /**
    * create new context of spreadsheets for spark
    *
-   * @param oauth2JSON
+   * @param credentials
    * @return
    */
   def apply(credentials: HttpCredentialsAdapter): SparkSpreadsheetContext =

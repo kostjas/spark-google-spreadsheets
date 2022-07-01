@@ -169,7 +169,6 @@ class SpreadsheetSuite extends AnyFlatSpec with BeforeAndAfter {
   }
 
   "A sparse DataFrame" should "be saved as a sheet, preserving empty cells" in new SparsePersonDataFrame {
-    import com.github.potix2.spark.google.spreadsheets._
     withEmptyWorksheet { workSheetName =>
       personsDF.write
         .option("credentialsJson", oAuthJson)
@@ -200,9 +199,8 @@ class SpreadsheetSuite extends AnyFlatSpec with BeforeAndAfter {
            |CREATE TEMPORARY TABLE people
            |(id int, firstname string, lastname string)
            |USING com.github.potix2.spark.google.spreadsheets
-           |OPTIONS (path "$testSpreadsheetID/$worksheetName", credentialsJson "$oAuthJson")
+           |OPTIONS (path "$testSpreadsheetID/$worksheetName", credentialsJson '$oAuthJson')
        """.stripMargin.replaceAll("\n", " "))
-
       assert(sqlContext.sql("SELECT * FROM people").collect().length == 0)
     }
   }
@@ -212,7 +210,7 @@ class SpreadsheetSuite extends AnyFlatSpec with BeforeAndAfter {
       s"""
          |CREATE TEMPORARY TABLE SpreadsheetSuite
          |USING com.github.potix2.spark.google.spreadsheets
-         |OPTIONS (path "$testSpreadsheetID/case2", credentialsJson "$oAuthJson")
+         |OPTIONS (path "$testSpreadsheetID/case2", credentialsJson '$oAuthJson')
        """.stripMargin.replaceAll("\n", " "))
 
     assert(sqlContext.sql("SELECT id, firstname, lastname FROM SpreadsheetSuite").collect().length == 10)
@@ -225,14 +223,14 @@ class SpreadsheetSuite extends AnyFlatSpec with BeforeAndAfter {
            |CREATE TEMPORARY TABLE accesslog
            |(id string, firstname string, lastname string, email string, country string, ipaddress string)
            |USING com.github.potix2.spark.google.spreadsheets
-           |OPTIONS (path "$testSpreadsheetID/$worksheetName", credentialsJson "$oAuthJson")
+           |OPTIONS (path "$testSpreadsheetID/$worksheetName", credentialsJson '$oAuthJson')
        """.stripMargin.replaceAll("\n", " "))
 
       sqlContext.sql(
         s"""
            |CREATE TEMPORARY TABLE SpreadsheetSuite
            |USING com.github.potix2.spark.google.spreadsheets
-           |OPTIONS (path "$testSpreadsheetID/case2", credentialsJson "$oAuthJson")
+           |OPTIONS (path "$testSpreadsheetID/case2", credentialsJson '$oAuthJson')
        """.stripMargin.replaceAll("\n", " "))
 
       sqlContext.sql("INSERT OVERWRITE TABLE accesslog SELECT * FROM SpreadsheetSuite")
@@ -248,7 +246,6 @@ class SpreadsheetSuite extends AnyFlatSpec with BeforeAndAfter {
   }
 
   "The underscore" should "be used in a column name" in new UnderscoreDataFrame {
-    import com.github.potix2.spark.google.spreadsheets._
     withEmptyWorksheet { workSheetName =>
       aDF.write
         .option("credentialsJson", oAuthJson)

@@ -26,7 +26,7 @@ object Credentials {
     ).createScoped(scopes.asJava)
 
     credentials.refreshIfExpired()
-    val accessToken = credentials.refreshAccessToken
+    val accessToken = credentials.refreshAccessToken()
 
     val oAuth2Credentials = GoogleCredentials.newBuilder()
       .setAccessToken(accessToken)
