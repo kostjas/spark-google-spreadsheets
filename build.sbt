@@ -1,24 +1,26 @@
+import ReleaseTransformations._
+
 enablePlugins(SparkPlugin)
 
-name := "spark-google-spreadsheets"
+ThisBuild / name := "spark-google-spreadsheets"
 
-organization := "io.github.riskidentdms"
+ThisBuild / organization := "io.github.riskidentdms"
 
-homepage := Some(url("https://github.com/riskidentdms/spark-google-spreadsheets"))
+ThisBuild / homepage := Some(url("https://github.com/riskidentdms/spark-google-spreadsheets"))
 
-organizationHomepage := Some(url("https://github.com/riskidentdms"))
+ThisBuild / organizationHomepage := Some(url("https://github.com/riskidentdms"))
 
-description := "Google Spreadsheets datasource for SparkSQL and DataFrames."
+ThisBuild / description := "Google Spreadsheets datasource for SparkSQL and DataFrames."
 
-licenses += ("Apache-2.0", url("http://www.apache.org/licenses/LICENSE-2.0"))
+ThisBuild / licenses += ("Apache-2.0", url("http://www.apache.org/licenses/LICENSE-2.0"))
 
-scalaVersion := "2.12.15"
+ThisBuild / scalaVersion := "2.12.15"
 
-sparkVersion := "3.3.0"
+ThisBuild / sparkVersion := "3.3.0"
 
-sparkComponents := Seq("core", "sql")
+ThisBuild / sparkComponents := Seq("core", "sql")
 
-libraryDependencies ++= Seq(
+ThisBuild / libraryDependencies ++= Seq(
   "org.slf4j" % "slf4j-api" % "1.7.36" % "provided",
   "org.scalatest" %% "scalatest" % "3.2.13" % "test",
   "com.google.apis" % "google-api-services-sheets" % "v4-rev20220620-2.0.0" excludeAll(
@@ -32,32 +34,32 @@ libraryDependencies ++= Seq(
   "com.google.guava" % "guava" % "31.1-jre"
 )
 
-resolvers ++= Seq(Resolver.mavenLocal, Resolver.sonatypeRepo("staging"))
+ThisBuild / resolvers ++= Seq(Resolver.mavenLocal) ++ Resolver.sonatypeOssRepos("staging")
 
 /**
  * release settings
  */
-publishMavenStyle := true
+ThisBuild / publishMavenStyle := true
 
-pgpKeyRing := Some(file("~/.gnupg/pubring.kbx"))
+ThisBuild / pgpKeyRing := Some(file("~/.gnupg/pubring.kbx"))
 
-releasePublishArtifactsAction := PgpKeys.publishSigned.value
+ThisBuild / releasePublishArtifactsAction := PgpKeys.publishSigned.value
 
-Test / publishArtifact := false
+ThisBuild / Test / publishArtifact := false
 
 // Remove all additional repository other than Maven Central from POM
-pomIncludeRepository := { _ => false }
+ThisBuild / pomIncludeRepository := { _ => false }
 
-credentials += Credentials(Path.userHome / ".sbt" / "sonatype_credentials")
+ThisBuild / credentials += Credentials(Path.userHome / ".sbt" / "sonatype_credentials")
 
 // For all Sonatype accounts created on or after February 2021
-sonatypeCredentialHost := "s01.oss.sonatype.org"
+ThisBuild / sonatypeCredentialHost := "s01.oss.sonatype.org"
 
-sonatypeProfileName := "io.github.riskidentdms"
+ThisBuild / sonatypeProfileName := "io.github.riskidentdms"
 
-publishTo := sonatypePublishToBundle.value
+ThisBuild / publishTo := sonatypePublishToBundle.value
 
-scmInfo := Some(
+ThisBuild / scmInfo := Some(
   ScmInfo(
     url("https://github.com/riskidentdms/spark-google-spreadsheets"),
     "git@github.com:riskidentdms/spark-google-spreadsheets.git"
@@ -74,14 +76,12 @@ developers := List(
 )
 
 // Skip tests during assembly
-assembly / test := {}
+ThisBuild / assembly / test := {}
 
-releaseCrossBuild := false
-
-import ReleaseTransformations._
+ThisBuild / releaseCrossBuild := false
 
 // Add publishing to spark packages as another step.
-releaseProcess := Seq[ReleaseStep](
+ThisBuild / releaseProcess := Seq[ReleaseStep](
   checkSnapshotDependencies,
   inquireVersions,
   runClean,
@@ -96,4 +96,4 @@ releaseProcess := Seq[ReleaseStep](
   pushChanges
 )
 
-releaseVcsSign := true
+ThisBuild / releaseVcsSign := true
