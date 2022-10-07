@@ -3,24 +3,19 @@ import ReleaseTransformations._
 enablePlugins(SparkPlugin)
 
 ThisBuild / name := "spark-google-spreadsheets"
-
+ThisBuild / versionScheme := Some("early-semver")
 ThisBuild / organization := "io.github.riskidentdms"
-
 ThisBuild / homepage := Some(url("https://github.com/riskidentdms/spark-google-spreadsheets"))
-
 ThisBuild / organizationHomepage := Some(url("https://github.com/riskidentdms"))
-
 ThisBuild / description := "Google Spreadsheets datasource for SparkSQL and DataFrames."
-
 ThisBuild / licenses += ("Apache-2.0", url("http://www.apache.org/licenses/LICENSE-2.0"))
-
 ThisBuild / scalaVersion := "2.12.15"
 
-ThisBuild / sparkVersion := "3.3.0"
+sparkVersion := "3.3.0"
 
-ThisBuild / sparkComponents := Seq("core", "sql")
+sparkComponents := Seq("core", "sql")
 
-ThisBuild / libraryDependencies ++= Seq(
+libraryDependencies ++= Seq(
   "org.slf4j" % "slf4j-api" % "1.7.36" % "provided",
   "org.scalatest" %% "scalatest" % "3.2.13" % "test",
   "com.google.apis" % "google-api-services-sheets" % "v4-rev20220620-2.0.0" excludeAll(
