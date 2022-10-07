@@ -20,14 +20,14 @@ This library supports different versions of Spark:
 
 | This library | Spark Version |
 | ------------ | ------------- |
-| 0.10.x        | 3.1.1  |
+| 0.1.x        | 3.1.1  |
 
 ## Linking
 
 Using SBT:
 
 ```
-libraryDependencies += "com.github.riskidentdms" %% "spark-google-spreadsheets" % "0.11.0"
+libraryDependencies += "com.github.riskidentdms" %% "spark-google-spreadsheets" % "0.1.0"
 ```
 
 Using Maven:
@@ -36,11 +36,13 @@ Using Maven:
 <dependency>
   <groupId>com.github.riskidentdms</groupId>
   <artifactId>spark-google-spreadsheets_2.12</artifactId>
-  <version>0.11.0</version>
+  <version>0.1.0</version>
 </dependency>
 ```
 
 ## SQL API
+
+TBD: Should be updated
 
 ```sql
 CREATE TABLE cars
@@ -53,6 +55,8 @@ OPTIONS (
 ```
 
 ## Scala API
+
+TBD: Should be updated
 
 ```scala
 import org.apache.spark.sql.SparkSession
@@ -79,6 +83,7 @@ df.write.
 ```
 
 ### Using Google default application credentials
+TBD: Should be updated
 
 Provide authentication credentials to your application code by setting the environment variable 
 `GOOGLE_APPLICATION_CREDENTIALS`. The variable should be set to the path of the service account json file.
