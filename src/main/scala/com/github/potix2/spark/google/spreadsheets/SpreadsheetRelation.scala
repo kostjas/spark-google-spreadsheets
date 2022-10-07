@@ -16,16 +16,23 @@ package com.github.potix2.spark.google.spreadsheets
 import com.github.potix2.spark.google.spreadsheets.SparkSpreadsheetService.SparkSpreadsheetContext
 import com.github.potix2.spark.google.spreadsheets.util._
 import org.apache.spark.rdd.RDD
-import org.apache.spark.sql.sources.{BaseRelation, InsertableRelation, TableScan}
+import org.apache.spark.sql.sources.{
+  BaseRelation,
+  InsertableRelation,
+  TableScan
+}
 import org.apache.spark.sql.types.{StringType, StructField, StructType}
 import org.apache.spark.sql.{DataFrame, Row, SQLContext}
 
 case class SpreadsheetRelation protected[spark] (
-                                                  context:SparkSpreadsheetContext,
-                                                  spreadsheetName: String,
-                                                  worksheetName: String,
-                                                  userSchema: Option[StructType] = None)(@transient val sqlContext: SQLContext)
-  extends BaseRelation with TableScan with InsertableRelation {
+  context: SparkSpreadsheetContext,
+  spreadsheetName: String,
+  worksheetName: String,
+  userSchema: Option[StructType] = None
+)(@transient val sqlContext: SQLContext)
+    extends BaseRelation
+    with TableScan
+    with InsertableRelation {
 
   import com.github.potix2.spark.google.spreadsheets.SparkSpreadsheetService._
 
@@ -34,39 +41,42 @@ case class SpreadsheetRelation protected[spark] (
   private lazy val aWorksheet: SparkWorksheet =
     findWorksheet(spreadsheetName, worksheetName)(context) match {
       case Right(aWorksheet) => aWorksheet
-      case Left(e) => throw e
+      case Left(e)           => throw e
     }
 
   private lazy val rows: Seq[Map[String, String]] = aWorksheet.rows
 
-  private[spreadsheets] def findWorksheet(spreadsheetName: String, worksheetName: String)(ctx: SparkSpreadsheetContext): Either[Throwable, SparkWorksheet] =
+  private[spreadsheets] def findWorksheet(
+    spreadsheetName: String,
+    worksheetName: String
+  )(ctx: SparkSpreadsheetContext): Either[Throwable, SparkWorksheet] =
     for {
-      sheet <- findSpreadsheet(spreadsheetName)(ctx).toRight(new RuntimeException(s"no such spreadsheet: $spreadsheetName"))
-      worksheet <- sheet.findWorksheet(worksheetName).toRight(new RuntimeException(s"no such worksheet: $worksheetName"))
+      sheet <- findSpreadsheet(spreadsheetName)(ctx)
+        .toRight(new RuntimeException(s"no such spreadsheet: $spreadsheetName"))
+      worksheet <- sheet
+        .findWorksheet(worksheetName)
+        .toRight(new RuntimeException(s"no such worksheet: $worksheetName"))
     } yield worksheet
 
   override def buildScan(): RDD[Row] = {
     val aSchema = schema
     sqlContext.sparkContext.makeRDD(rows).mapPartitions { iter =>
       iter.map { m =>
-        var index = 0
-        val rowArray = new Array[Any](aSchema.fields.length)
-        while(index < aSchema.fields.length) {
-          val field = aSchema.fields(index)
-          rowArray(index) = if (m.contains(field.name)) {
-            TypeCast.castTo(m(field.name), field.dataType, field.nullable)
-          } else {
-            null
-          }
-          index += 1
+        Row.fromSeq {
+          aSchema.fields.map { field =>
+            if (m.contains(field.name)) {
+              TypeCast.castTo(m(field.name), field.dataType, field.nullable)
+            } else {
+              null
+            }
+          }.toSeq
         }
-        Row.fromSeq(rowArray)
       }
     }
   }
 
   override def insert(data: DataFrame, overwrite: Boolean): Unit = {
-    if(!overwrite) {
+    if (!overwrite) {
       sys.error("Spreadsheet tables only support INSERT OVERWRITE for now.")
     }
 

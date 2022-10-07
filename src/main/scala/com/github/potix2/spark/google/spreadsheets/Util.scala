@@ -9,8 +9,6 @@ import scala.collection.breakOut
 import scala.language.postfixOps
 
 object Util {
-  def convert(schema: StructType, row: Row): Map[String, Object] =
-    schema.iterator.zipWithIndex.map { case (f, i) => f.name -> row(i).asInstanceOf[AnyRef]} toMap
 
   def toRowData(row: Row): RowData =
       new RowData().setValues(
