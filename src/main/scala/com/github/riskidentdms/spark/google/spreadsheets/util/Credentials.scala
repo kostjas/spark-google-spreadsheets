@@ -1,4 +1,4 @@
-package com.github.potix2.spark.google.spreadsheets.util
+package com.github.riskidentdms.spark.google.spreadsheets.util
 
 import com.google.api.services.sheets.v4.SheetsScopes
 import com.google.auth.http.HttpCredentialsAdapter

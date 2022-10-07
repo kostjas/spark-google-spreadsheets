@@ -2,11 +2,11 @@ enablePlugins(SparkPlugin)
 
 name := "spark-google-spreadsheets"
 
-organization := "io.github.kostjas"
+organization := "io.github.riskidentdms"
 
-homepage := Some(url("https://github.com/kostjas/spark-google-spreadsheets"))
+homepage := Some(url("https://github.com/riskidentdms/spark-google-spreadsheets"))
 
-organizationHomepage := Some(url("https://github.com/kostjas"))
+organizationHomepage := Some(url("https://github.com/riskidentdms"))
 
 description := "Google Spreadsheets datasource for SparkSQL and DataFrames."
 
@@ -53,23 +53,23 @@ credentials += Credentials(Path.userHome / ".sbt" / "sonatype_credentials")
 // For all Sonatype accounts created on or after February 2021
 sonatypeCredentialHost := "s01.oss.sonatype.org"
 
-sonatypeProfileName := "io.github.kostjas"
+sonatypeProfileName := "io.github.riskidentdms"
 
 publishTo := sonatypePublishToBundle.value
 
 scmInfo := Some(
   ScmInfo(
-    url("https://github.com/kostjas/spark-google-spreadsheets"),
-    "git@github.com:kostjas/spark-google-spreadsheets.git"
+    url("https://github.com/riskidentdms/spark-google-spreadsheets"),
+    "git@github.com:riskidentdms/spark-google-spreadsheets.git"
   )
 )
 
 developers := List(
   Developer(
-    id    = "kostjas",
+    id    = "ri-kostya",
     name  = "Kostya Spitsyn",
     email = "konstantin.spitsyn@gmail.com",
-    url   = url("https://github.com/kostjas/")
+    url   = url("https://github.com/ri-kostya/")
   )
 )
 

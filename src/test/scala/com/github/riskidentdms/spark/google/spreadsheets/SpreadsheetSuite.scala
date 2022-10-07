@@ -11,10 +11,10 @@
  * See the License for the specific language governing permissions and
  * limitations under the License.
  */
-package com.github.potix2.spark.google.spreadsheets
+package com.github.riskidentdms.spark.google.spreadsheets
 
-import com.github.potix2.spark.google.spreadsheets.SparkSpreadsheetService.SparkSpreadsheetContext
-import com.github.potix2.spark.google.spreadsheets.util.Credentials
+import SparkSpreadsheetService.SparkSpreadsheetContext
+import com.github.riskidentdms.spark.google.spreadsheets.util.Credentials
 import org.apache.spark.rdd.RDD
 import org.apache.spark.sql.types._
 import org.apache.spark.sql.{DataFrame, Row, SQLContext, SparkSession}
@@ -139,7 +139,7 @@ class SpreadsheetSuite extends AnyFlatSpec with BeforeAndAfter {
   behavior of "A DataFrame"
 
   it should "be saved as a sheet" in new PersonDataFrame {
-    import com.github.potix2.spark.google.spreadsheets._
+    import com.github.riskidentdms.spark.google.spreadsheets._
     withEmptyWorksheet { workSheetName =>
       personsDF.write
         .option("credentialsJson", oAuthJson)
@@ -197,7 +197,7 @@ class SpreadsheetSuite extends AnyFlatSpec with BeforeAndAfter {
         s"""
            |CREATE TEMPORARY TABLE people
            |(id int, firstname string, lastname string)
-           |USING com.github.potix2.spark.google.spreadsheets
+           |USING com.github.riskidentdms.spark.google.spreadsheets
            |OPTIONS (path "$testSpreadsheetID/$worksheetName", credentialsJson '$oAuthJson')
        """.stripMargin.replaceAll("\n", " "))
       assert(sqlContext.sql("SELECT * FROM people").collect().length == 0)
@@ -208,7 +208,7 @@ class SpreadsheetSuite extends AnyFlatSpec with BeforeAndAfter {
     sqlContext.sql(
       s"""
          |CREATE TEMPORARY TABLE SpreadsheetSuite
-         |USING com.github.potix2.spark.google.spreadsheets
+         |USING com.github.riskidentdms.spark.google.spreadsheets
          |OPTIONS (path "$testSpreadsheetID/case2", credentialsJson '$oAuthJson')
        """.stripMargin.replaceAll("\n", " "))
 
@@ -221,14 +221,14 @@ class SpreadsheetSuite extends AnyFlatSpec with BeforeAndAfter {
         s"""
            |CREATE TEMPORARY TABLE accesslog
            |(id string, firstname string, lastname string, email string, country string, ipaddress string)
-           |USING com.github.potix2.spark.google.spreadsheets
+           |USING com.github.riskidentdms.spark.google.spreadsheets
            |OPTIONS (path "$testSpreadsheetID/$worksheetName", credentialsJson '$oAuthJson')
        """.stripMargin.replaceAll("\n", " "))
 
       sqlContext.sql(
         s"""
            |CREATE TEMPORARY TABLE SpreadsheetSuite
-           |USING com.github.potix2.spark.google.spreadsheets
+           |USING com.github.riskidentdms.spark.google.spreadsheets
            |OPTIONS (path "$testSpreadsheetID/case2", credentialsJson '$oAuthJson')
        """.stripMargin.replaceAll("\n", " "))
 
