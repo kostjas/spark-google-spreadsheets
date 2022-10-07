@@ -61,7 +61,7 @@ ThisBuild / scmInfo := Some(
   )
 )
 
-developers := List(
+ThisBuild / developers := List(
   Developer(
     id    = "ri-kostya",
     name  = "Kostya Spitsyn",
@@ -76,7 +76,7 @@ ThisBuild / assembly / test := {}
 ThisBuild / releaseCrossBuild := false
 
 // Add publishing to spark packages as another step.
-ThisBuild / releaseProcess := Seq[ReleaseStep](
+releaseProcess := Seq[ReleaseStep](
   checkSnapshotDependencies,
   inquireVersions,
   runClean,
