@@ -1,6 +1,6 @@
 resolvers += Resolver.sonatypeRepo("staging")
 
-addSbtPlugin("com.typesafe.sbteclipse" % "sbteclipse-plugin" % "5.2.4")
+addSbtPlugin("com.github.sbt" % "sbt-eclipse" % "6.2.0")
 
 addSbtPlugin("com.github.alonsodomin" % "sbt-spark" % "0.6.0")
 
