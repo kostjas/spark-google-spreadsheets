@@ -14,7 +14,7 @@ licenses += ("Apache-2.0", url("http://www.apache.org/licenses/LICENSE-2.0"))
 
 scalaVersion := "2.12.15"
 
-sparkVersion := "3.3.0"
+sparkVersion := "3.3.4"
 
 sparkComponents := Seq("core", "sql")
 
