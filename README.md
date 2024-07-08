@@ -1,10 +1,21 @@
+# Repository Archived
+
+This repository has been archived and is now read-only.
+
+## Reason for Archiving
+
+This project will no longer be maintained and new versions will no longer be published.
+
+## Important Notes
+
+- The code and all issues, pull requests, and discussions are still accessible in a read-only state.
+- No further updates, bug fixes, or support will be provided.
+
 # Spark Google Spreadsheets
 
 Google Spreadsheets datasource for [SparkSQL and DataFrames](http://spark.apache.org/docs/latest/sql-programming-guide.html)
 
-[![Actions Build](https://github.com/kostjas/spark-google-spreadsheets/actions/workflows/scala.yml/badge.svg)](https://github.com/kostjas/spark-google-spreadsheets/actions)
-[![Coverage Status](https://coveralls.io/repos/github/kostjas/spark-google-spreadsheets/badge.svg?branch=master)](https://coveralls.io/github/kostjas/spark-google-spreadsheets?branch=master)
-[![Scala Steward badge](https://img.shields.io/badge/Scala_Steward-helping-blue.svg?style=flat&logo=data:image/png;base64,iVBORw0KGgoAAAANSUhEUgAAAA4AAAAQCAMAAAARSr4IAAAAVFBMVEUAAACHjojlOy5NWlrKzcYRKjGFjIbp293YycuLa3pYY2LSqql4f3pCUFTgSjNodYRmcXUsPD/NTTbjRS+2jomhgnzNc223cGvZS0HaSD0XLjbaSjElhIr+AAAAAXRSTlMAQObYZgAAAHlJREFUCNdNyosOwyAIhWHAQS1Vt7a77/3fcxxdmv0xwmckutAR1nkm4ggbyEcg/wWmlGLDAA3oL50xi6fk5ffZ3E2E3QfZDCcCN2YtbEWZt+Drc6u6rlqv7Uk0LdKqqr5rk2UCRXOk0vmQKGfc94nOJyQjouF9H/wCc9gECEYfONoAAAAASUVORK5CYII=)](https://scala-steward.org)
+[![Actions Build](https://github.com/riskidentdms/spark-google-spreadsheets/actions/workflows/scala.yml/badge.svg)](https://github.com/riskidentdms/spark-google-spreadsheets/actions)
 
 ## Notice
 
@@ -22,31 +33,33 @@ This library supports different versions of Spark:
 
 | This library | Spark Version |
 | ------------ | ------------- |
-| 0.10.x        | 3.1.1  |
+| 0.1.x        | 3.1.1  |
 
 ## Linking
 
 Using SBT:
 
 ```
-libraryDependencies += "com.github.kostjas" %% "spark-google-spreadsheets" % "0.11.0"
+libraryDependencies += "com.github.riskidentdms" %% "spark-google-spreadsheets" % "0.1.0"
 ```
 
 Using Maven:
 
 ```xml
 <dependency>
-  <groupId>com.github.kostjas</groupId>
+  <groupId>com.github.riskidentdms</groupId>
   <artifactId>spark-google-spreadsheets_2.12</artifactId>
-  <version>0.11.0</version>
+  <version>0.1.0</version>
 </dependency>
 ```
 
 ## SQL API
 
+TBD: Should be updated
+
 ```sql
 CREATE TABLE cars
-USING com.github.potix2.spark.google.spreadsheets
+USING com.github.riskidentdms.spark.google.spreadsheets
 OPTIONS (
     path "<spreadsheetId>/worksheet1",
     serviceAccountId "xxxxxx@developer.gserviceaccount.com",
@@ -55,6 +68,8 @@ OPTIONS (
 ```
 
 ## Scala API
+
+TBD: Should be updated
 
 ```scala
 import org.apache.spark.sql.SparkSession
@@ -66,14 +81,14 @@ val sqlContext = SparkSession.builder()
 
 // Creates a DataFrame from a specified worksheet
 val df = sqlContext.read.
-    format("com.github.kostjas.spark.google.spreadsheets").
+    format("com.github.riskidentdms.spark.google.spreadsheets").
     option("serviceAccountId", "xxxxxx@developer.gserviceaccount.com").
     option("credentialPath", "/path/to/credential.p12").
     load("<spreadsheetId>/worksheet1")
 
 // Saves a DataFrame to a new worksheet
 df.write.
-    format("com.github.kostjas.spark.google.spreadsheets").
+    format("com.github.riskidentdms.spark.google.spreadsheets").
     option("serviceAccountId", "xxxxxx@developer.gserviceaccount.com").
     option("credentialPath", "/path/to/credential.p12").
     save("<spreadsheetId>/newWorksheet")
@@ -81,6 +96,7 @@ df.write.
 ```
 
 ### Using Google default application credentials
+TBD: Should be updated
 
 Provide authentication credentials to your application code by setting the environment variable 
 `GOOGLE_APPLICATION_CREDENTIALS`. The variable should be set to the path of the service account json file.
@@ -96,7 +112,7 @@ val sqlContext = SparkSession.builder()
 
 // Creates a DataFrame from a specified worksheet
 val df = sqlContext.read.
-    format("com.github.kostjas.spark.google.spreadsheets").
+    format("com.github.riskidentdms.spark.google.spreadsheets").
     load("<spreadsheetId>/worksheet1")
 ```
 

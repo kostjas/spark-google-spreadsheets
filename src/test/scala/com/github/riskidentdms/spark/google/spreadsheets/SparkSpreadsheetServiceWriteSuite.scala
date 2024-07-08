@@ -11,10 +11,11 @@
  * See the License for the specific language governing permissions and
  * limitations under the License.
  */
-package com.github.potix2.spark.google.spreadsheets
+package com.github.riskidentdms.spark.google.spreadsheets
 
-import com.github.potix2.spark.google.spreadsheets.SparkSpreadsheetService.SparkSpreadsheet
-import com.github.potix2.spark.google.spreadsheets.util.Credentials
+import SparkSpreadsheetService.SparkSpreadsheet
+import com.github.riskidentdms.spark.google.spreadsheets.util.Credentials
+import com.github.riskidentdms.spark.google.spreadsheets.SparkSpreadsheetService.SparkSpreadsheet
 import com.google.api.services.sheets.v4.model.{CellData, ExtendedValue, RowData}
 import org.apache.spark.sql.types.{DataTypes, StructField, StructType}
 import org.scalatest.BeforeAndAfter

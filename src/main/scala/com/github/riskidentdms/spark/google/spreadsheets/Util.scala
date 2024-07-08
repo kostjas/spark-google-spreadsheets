@@ -1,4 +1,4 @@
-package com.github.potix2.spark.google.spreadsheets
+package com.github.riskidentdms.spark.google.spreadsheets
 
 import com.google.api.services.sheets.v4.model.{CellData, ExtendedValue, RowData}
 import org.apache.spark.sql.Row

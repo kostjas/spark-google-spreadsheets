@@ -11,9 +11,9 @@
  * See the License for the specific language governing permissions and
  * limitations under the License.
  */
-package com.github.potix2.spark.google.spreadsheets
+package com.github.riskidentdms.spark.google.spreadsheets
 
-import com.github.potix2.spark.google.spreadsheets.util.Credentials
+import com.github.riskidentdms.spark.google.spreadsheets.util.Credentials
 
 import org.scalatest.BeforeAndAfter
 import org.scalatest.flatspec.AnyFlatSpec

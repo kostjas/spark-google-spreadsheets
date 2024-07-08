@@ -11,9 +11,9 @@
  * See the License for the specific language governing permissions and
  * limitations under the License.
  */
-package com.github.potix2.spark.google.spreadsheets
+package com.github.riskidentdms.spark.google.spreadsheets
 
-import com.github.potix2.spark.google.spreadsheets.util.Credentials
+import com.github.riskidentdms.spark.google.spreadsheets.util.Credentials
 import org.apache.spark.sql.sources.{BaseRelation, CreatableRelationProvider, RelationProvider, SchemaRelationProvider}
 import org.apache.spark.sql.types.StructType
 import org.apache.spark.sql.{DataFrame, SQLContext, SaveMode}
@@ -32,7 +32,7 @@ class DefaultSource extends RelationProvider with SchemaRelationProvider with Cr
     (elems(0), elems(1))
   }
 
-  override def createRelation(sqlContext: SQLContext, parameters: Map[String, String], schema: StructType) = {
+  override def createRelation(sqlContext: SQLContext, parameters: Map[String, String], schema: StructType): SpreadsheetRelation = {
     val path = parameters.getOrElse("path", sys.error("'path' must be specified for spreadsheets."))
     val (spreadsheetName, worksheetName) = pathToSheetNames(path)
     val context = createSpreadsheetContext(parameters)

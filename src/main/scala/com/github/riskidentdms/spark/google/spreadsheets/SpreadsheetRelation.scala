@@ -11,16 +11,14 @@
  * See the License for the specific language governing permissions and
  * limitations under the License.
  */
-package com.github.potix2.spark.google.spreadsheets
+package com.github.riskidentdms.spark.google.spreadsheets
 
-import com.github.potix2.spark.google.spreadsheets.SparkSpreadsheetService.SparkSpreadsheetContext
-import com.github.potix2.spark.google.spreadsheets.util._
+import SparkSpreadsheetService.SparkSpreadsheetContext
+import com.github.riskidentdms.spark.google.spreadsheets.util._
+import com.github.riskidentdms.spark.google.spreadsheets.SparkSpreadsheetService.SparkSpreadsheetContext
+import com.github.riskidentdms.spark.google.spreadsheets.util.TypeCast
 import org.apache.spark.rdd.RDD
-import org.apache.spark.sql.sources.{
-  BaseRelation,
-  InsertableRelation,
-  TableScan
-}
+import org.apache.spark.sql.sources.{BaseRelation, InsertableRelation, TableScan}
 import org.apache.spark.sql.types.{StringType, StructField, StructType}
 import org.apache.spark.sql.{DataFrame, Row, SQLContext}
 
@@ -34,7 +32,7 @@ case class SpreadsheetRelation protected[spark] (
     with TableScan
     with InsertableRelation {
 
-  import com.github.potix2.spark.google.spreadsheets.SparkSpreadsheetService._
+  import SparkSpreadsheetService._
 
   override def schema: StructType = userSchema.getOrElse(inferSchema())
 
