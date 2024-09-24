@@ -29,7 +29,7 @@ libraryDependencies ++= Seq(
   ),
   "org.scala-lang" % "scala-library" % scalaVersion.value % "compile",
   "javax.servlet" % "javax.servlet-api" % "4.0.1" % "compile",
-  "com.google.guava" % "guava" % "31.1-jre"
+  "com.google.guava" % "guava" % "33.3.1-jre"
 )
 
 resolvers ++= Seq(Resolver.mavenLocal, Resolver.sonatypeRepo("staging"))
