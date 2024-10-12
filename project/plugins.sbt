@@ -6,7 +6,7 @@ addSbtPlugin("com.github.alonsodomin" % "sbt-spark" % "0.6.0")
 
 addSbtPlugin("org.scalastyle" %% "scalastyle-sbt-plugin" % "1.0.0")
 
-addSbtPlugin("org.xerial.sbt" % "sbt-sonatype" % "3.9.13")
+addSbtPlugin("org.xerial.sbt" % "sbt-sonatype" % "3.12.2")
 
 addSbtPlugin("com.github.sbt" % "sbt-release" % "1.1.0")
 
