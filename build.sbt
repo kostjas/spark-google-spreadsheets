@@ -21,7 +21,7 @@ sparkComponents := Seq("core", "sql")
 libraryDependencies ++= Seq(
   "org.slf4j" % "slf4j-api" % "1.7.36" % "provided",
   "org.scalatest" %% "scalatest" % "3.2.13" % "test",
-  "com.google.apis" % "google-api-services-sheets" % "v4-rev20220620-2.0.0" excludeAll(
+  "com.google.apis" % "google-api-services-sheets" % "v4-rev20241008-2.0.0" excludeAll(
     ExclusionRule("com.google.guava", "guava")
   ),
   "com.google.auth" % "google-auth-library-oauth2-http" % "1.10.0" excludeAll(
