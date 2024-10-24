@@ -24,7 +24,7 @@ libraryDependencies ++= Seq(
   "com.google.apis" % "google-api-services-sheets" % "v4-rev20220620-2.0.0" excludeAll(
     ExclusionRule("com.google.guava", "guava")
   ),
-  "com.google.auth" % "google-auth-library-oauth2-http" % "1.10.0" excludeAll(
+  "com.google.auth" % "google-auth-library-oauth2-http" % "1.29.0" excludeAll(
     ExclusionRule("com.google.guava", "guava")
   ),
   "org.scala-lang" % "scala-library" % scalaVersion.value % "compile",
